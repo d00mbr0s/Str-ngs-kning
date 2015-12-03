@@ -1,6 +1,6 @@
 package stringSearch;
 
-
+//https://www.youtube.com/watch?v=GTJr8OvyEVQ
 public class KnutMorrisPratt {
     public int[] prekmp(String pattern) {
         int[] next = new int[pattern.length()];
