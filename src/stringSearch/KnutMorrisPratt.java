@@ -2,42 +2,52 @@ package stringSearch;
 
 //https://www.youtube.com/watch?v=GTJr8OvyEVQ
 public class KnutMorrisPratt {
-    public int[] prekmp(String pattern) {
-        int[] next = new int[pattern.length()];
-        int i=0, j=-1;
-        next[0]=-1;
-        while (i<pattern.length()-1) {
-            while (j>=0 && pattern.charAt(i)!=pattern.charAt(j))
-                j = next[j];
-            i++;
-            j++;
-            next[i] = j;
+
+    public int[] pre (String p) {
+        int[] preArray = new int[p.length()];
+        preArray[0] = 0;
+        int j = 0;
+        for (int i = 1; i < p.length();) {
+            if(p.charAt(i) == p.charAt(j) ) {
+                preArray[i] = j + 1;
+                j++;
+                i++;
+            } else {
+                if(j != 0) {
+                    j = preArray[j-1];
+                } else {
+                    preArray[i] = 0;
+                    i++;
+                }
+            }
         }
-        return next;
+        for(int i : preArray) {
+            System.out.print(i + ", ");
+        }
+        return preArray;
     }
 
-    public int kmp(String text, String pattern) {
-        int[] next = prekmp(pattern);
-        int i=0, j=0;
-        while (i<text.length()) {
-            while (j>=0 && text.charAt(i)!=pattern.charAt(j))
-                j = next[j];
-            i++; j++;
-            if (j==pattern.length()) return i-pattern.length();
+    public int search(String t, String p) {
+        int[] temp = pre(p);
+        int i = 0, j = 0;
+
+        while(i < t.length() && j < p.length()) {
+            if(t.charAt(i) == p.charAt(j)) {
+                j++;
+                i++;
+            } else {
+                if(j != 0) {
+                    j = temp[j-1];
+                } else {
+                    i++;
+                }
+            }
+        }
+        if(j == p.length()) {
+            return i - p.length();
+
         }
         return -1;
     }
 
-}
-
-class Test {
-    public static void main(String[] args) {
-        KnutMorrisPratt k = new KnutMorrisPratt();
-        String text = "Lorem ipsum dolor sit amet";
-        String pattern = "ipsum";
-
-        int first_occur_position = k.kmp(text, pattern);
-        System.out.println("The text '" + pattern + "' is first found on the "
-                + first_occur_position + " position.");
-    }
 }
