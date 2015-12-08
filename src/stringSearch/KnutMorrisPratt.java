@@ -1,5 +1,7 @@
 package stringSearch;
 
+import java.util.ArrayList;
+
 //https://www.youtube.com/watch?v=GTJr8OvyEVQ
 public class KnutMorrisPratt {
 
@@ -27,9 +29,10 @@ public class KnutMorrisPratt {
         return preArray;
     }
 
-    public int search(String t, String p) {
+    public ArrayList<Integer> search(String t, String p) {
         int[] temp = pre(p);
         int i = 0, j = 0;
+        ArrayList<Integer> posList = new ArrayList<>();
 
         while(i < t.length() && j < p.length()) {
             if(t.charAt(i) == p.charAt(j)) {
@@ -42,12 +45,13 @@ public class KnutMorrisPratt {
                     i++;
                 }
             }
+            if(j == p.length()) {
+                posList.add(i-p.length());
+                //  return i - p.length();
+                j = 0;
+            }
         }
-        if(j == p.length()) {
-            return i - p.length();
-
-        }
-        return -1;
+        return posList;
     }
 
 }
