@@ -3,71 +3,49 @@ package stringSearch;
 import java.util.ArrayList;
 
 public class BoyerMoore {
-    private final int R;     // the radix
-    private ArrayList<Integer> temp = new ArrayList<>();
-    private int[] right;     // the bad-character skip array
-    private String pat;      // or as a string
 
-    // pattern provided as a string
-    public BoyerMoore(String pat) {
-        this.R = 256;
-        this.pat = pat;
-
-        // position of rightmost occurrence of c in the pattern
-        right = new int[R];
-        for (int c = 0; c < R; c++)
+    public int[] preWorkPattern(String p) {
+        int [] right = new int[256];
+        for (int c = 0; c < right.length; c++) {
             right[c] = -1;
-        for (int j = 0; j < pat.length(); j++) {
-            right[pat.charAt(j)] = j;
-            temp.add(j);
         }
+        for (int j = 0; j < p.length(); j++) {
+            right[p.charAt(j)] = j;
+        }
+         return right;
     }
 
-    // return offset of first match; N if no match
-    public ArrayList<Integer> search(String txt) {
-        int M = pat.length();
-        int N = txt.length();
-        ArrayList<Integer> newArrayInt = new ArrayList<Integer>();
+    public ArrayList<Integer> search(String t, String p) {
+        int[] right = preWorkPattern(p);
+        ArrayList<Integer> newArrayInt = new ArrayList<>();
         int skip;
-
-        for(int i : temp) {
-            System.out.println(i + ", ");
-        }
-
-        for (int i = 0; i <= N - M; i += skip) {
+        for (int i = 0; i <= t.length() - p.length(); i += skip) {
             skip = 0;
-            for (int j = M-1; j >= 0; j--) {
-                if (pat.charAt(j) != txt.charAt(i+j)) {
-                    skip = Math.max(1, j - right[txt.charAt(i+j)]);
+            for (int j = p.length()-1; j >= 0; j--) {
+                if (p.charAt(j) != t.charAt(i+j)) {
+                    skip = Math.max(1, j - right[t.charAt(i+j)]);
                     break;
                 }
             }
-            if (skip == 0)
-            {
-                newArrayInt.add(i);    // found
+            if (skip == 0) {
+                newArrayInt.add(i);
                 skip++;
             }
         }
-        return newArrayInt;                       // not found
+        if (newArrayInt.isEmpty()) {
+            newArrayInt.add(-1);
+        }
+        return newArrayInt;
     }
 
-    // test client
     public static void main(String[] args) {
-        String pat = "abcccd";
+        String pat = "asdf";
         String txt = "asdf ghjk klll abc qwerty abc and poaslf abc";
 
-        BoyerMoore boyermoore1 = new BoyerMoore(pat);
+        BoyerMoore boyermoore1 = new BoyerMoore();
 
-        ArrayList<Integer> offset = boyermoore1.search(txt);
+        ArrayList<Integer> offset = boyermoore1.search(txt, pat);
 
-        // print results
-        System.out.println("Offset: "+ offset);
+        System.out.println("Found: "+ offset);
     }
 }
-
-
-/**
- * Takes a pattern string and an input string as command-line arguments;
- * searches for the pattern string in the text string; and prints
- * the first occurrence of the pattern string in the text string.
- */
