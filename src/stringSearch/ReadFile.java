@@ -40,7 +40,7 @@ public class ReadFile {
 
     // Test.
     public static void main(String[] args) throws IOException {
-        char[] f = readFile("./src/erik.txt");
+        char[] f = readFile("./src/bible-en.txt");
         for (int i = 0; i < f.length; i++) {
             if (i == 40) {
                 System.out.println("… and then "+(f.length-i)+" more characters");

@@ -10,9 +10,21 @@ import java.awt.event.ActionListener;
  */
 public class SearchUI {
     private JFrame frame;
+    private JTextArea tf;
+    private ButtonGroup grpText;
+    private ButtonGroup grpAlgo;
+    private JTextField tf1;
+    private JRadioButton rbtnWorst = new JRadioButton("WorstCase",true);
+    private JRadioButton rbtnBibeln = new JRadioButton("Bibeln",false);
+    private JRadioButton rbtnNaiv = new JRadioButton("Naiv",true);
+    private JRadioButton rbtnBoyerMoore = new JRadioButton("Boyer Moore",false);
+    private JRadioButton rbtnKMP = new JRadioButton("KMP",false);
+    private JRadioButton rbtnAlfa = new JRadioButton("Alphabet",false);
+    private Controller controller;
 
-    public SearchUI() {
 
+    public SearchUI(Controller controller) {
+        this.controller = controller;
     }
 
     public void initGUI() {
@@ -23,20 +35,14 @@ public class SearchUI {
         pnlTest.setLayout(null);
         frame.add(pnlTest);
 
-        JTextArea tf = new JTextArea();
-        tf.setBounds(360,29,250,170);
+        tf = new JTextArea();
+        tf.setBounds(18,220,320,170);
         tf.setBorder(BorderFactory.createTitledBorder("Output:"));
         tf.setEditable(false);
         frame.add(tf);
 
-        ButtonGroup grpText = new ButtonGroup();
-        ButtonGroup grpAlgo = new ButtonGroup();
-        JRadioButton rbtnWorst = new JRadioButton("WorstCase",true);
-        JRadioButton rbtnBibeln = new JRadioButton("Bibeln",false);
-
-        JRadioButton rbtnNaiv = new JRadioButton("Naiv",true);
-        JRadioButton rbtnBoyerMoore = new JRadioButton("Boyer Moore",false);
-        JRadioButton rbtnKMP = new JRadioButton("KMP",false);
+        grpText = new ButtonGroup();
+        grpAlgo = new ButtonGroup();
 
         JPanel pnlAlgo = new JPanel();
         pnlAlgo.setBorder(BorderFactory.createTitledBorder("Algorithm:"));
@@ -52,20 +58,23 @@ public class SearchUI {
         pnlAlgo.add(rbtnNaiv);
         pnlAlgo.add(rbtnBoyerMoore);
 
-        rbtnWorst.setBounds(5,35, 100, 17);
-        rbtnBibeln.setBounds(5,65,80,17);
+        rbtnWorst.setBounds(5,25, 100, 17);
+        rbtnBibeln.setBounds(5,50,80,17);
+        rbtnAlfa.setBounds(5,75,80,17);
+
+        pnlTest.add(rbtnAlfa);
         pnlTest.add(rbtnWorst);
         pnlTest.add(rbtnBibeln);
 
         grpText.add(rbtnWorst);
         grpText.add(rbtnBibeln);
+        grpText.add(rbtnAlfa);
 
         grpAlgo.add(rbtnKMP);
         grpAlgo.add(rbtnNaiv);
         grpAlgo.add(rbtnBoyerMoore);
 
-        JTextField tf1 = new JTextField();
-      //widtch hieght
+       tf1 = new JTextField();
         tf1.setBounds(5,100,135,50);
         tf1.setBorder(BorderFactory.createTitledBorder("SearchString:"));
         pnlTest.add(tf1);
@@ -77,6 +86,7 @@ public class SearchUI {
         rbtnBoyerMoore.setBackground(Color.WHITE);
         rbtnKMP.setBackground(Color.WHITE);
         rbtnNaiv.setBackground(Color.WHITE);
+        rbtnAlfa.setBackground(Color.WHITE);
 
         tf1.addActionListener(new EnterListener());
 
@@ -84,7 +94,7 @@ public class SearchUI {
 
     public void startUI() {
         frame = new JFrame();
-        frame.setBounds(0, 0, 630, 260);
+        frame.setBounds(0, 0, 365, 440);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.setTitle("String Searcher");
@@ -94,17 +104,11 @@ public class SearchUI {
         frame.setLocationRelativeTo(null);
     }
 
-
-    public static void main(String[] args) {
-        SearchUI ui = new SearchUI();
-        ui.startUI();
-    }
-
     private class EnterListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("ENTERPRESSED");
+            controller.searchBoyer(tf1.getText());
         }
     }
 }
