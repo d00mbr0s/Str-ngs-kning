@@ -30,6 +30,7 @@ public class KnutMorrisPratt {
     }
 
     public ArrayList<Integer> search(String t, String p) {
+        System.out.println("KMP");
         int[] temp = pre(p);
         int i = 0, j = 0;
         ArrayList<Integer> posList = new ArrayList<>();
@@ -50,10 +51,14 @@ public class KnutMorrisPratt {
                 posList.add(i-p.length());
                 //  return i - p.length();
                 j = 0;
+                i = (i - p.length()) +1;
             }
         }
-        System.out.println("KMP search, antal operationer: " + operations);
         return posList;
+    }
+
+    public int getOperations() {
+        return this.operations;
     }
 
 }

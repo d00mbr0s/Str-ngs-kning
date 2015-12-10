@@ -3,9 +3,14 @@ package stringSearch;
 import java.util.ArrayList;
 
 public class regularSearch {
+    private int operations = 0;
+
+    public int getOperations() {
+        return this.operations;
+    }
 
     public void stringSearch(String T, String P, ArrayList<Integer> pos) {
-        int operations = 0;
+        operations = 0;
         for(int i = 0; i <= T.length() - P.length(); i ++) {
             boolean mismatch = false;
             for(int j = 0; !mismatch && j < P.length(); j++) {
@@ -16,7 +21,6 @@ public class regularSearch {
                 pos.add(i);
             }
         }
-        System.out.println("Naiv search, antal operationer: " + operations);
     }
 
     public static void main(String[] args) {

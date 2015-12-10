@@ -21,6 +21,7 @@ public class SearchUI {
     private JRadioButton rbtnKMP = new JRadioButton("KMP",false);
     private JRadioButton rbtnAlfa = new JRadioButton("Alphabet",false);
     private Controller controller;
+    private JButton btnSearch = new JButton("Search");
 
 
     public SearchUI(Controller controller) {
@@ -36,19 +37,25 @@ public class SearchUI {
         frame.add(pnlTest);
 
         tf = new JTextArea();
-        tf.setBounds(18,220,320,170);
-        tf.setBorder(BorderFactory.createTitledBorder("Output:"));
         tf.setEditable(false);
-        frame.add(tf);
+
+        JScrollPane scrollPane = new JScrollPane(tf);
+        scrollPane.setBounds(18,220,320,170);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Output"));
+        frame.add(scrollPane);
 
         grpText = new ButtonGroup();
         grpAlgo = new ButtonGroup();
 
         JPanel pnlAlgo = new JPanel();
         pnlAlgo.setBorder(BorderFactory.createTitledBorder("Algorithm:"));
-        pnlAlgo.setBounds(190, 29, 150, 170);
+        pnlAlgo.setBounds(190, 29, 150, 130);
         pnlAlgo.setLayout(null);
         frame.add(pnlAlgo);
+        //xy w h
+        btnSearch.setBounds(190,170,150,30);
+        frame.add(btnSearch);
+
 
         rbtnNaiv.setBounds(5,35,100,17);
         rbtnBoyerMoore.setBounds(5, 65, 100, 17);
@@ -74,9 +81,10 @@ public class SearchUI {
         grpAlgo.add(rbtnNaiv);
         grpAlgo.add(rbtnBoyerMoore);
 
-       tf1 = new JTextField();
+        tf1 = new JTextField();
         tf1.setBounds(5,100,135,50);
         tf1.setBorder(BorderFactory.createTitledBorder("SearchString:"));
+        tf1.setToolTipText("Enter text here");
         pnlTest.add(tf1);
 
         pnlTest.setBackground(Color.WHITE);
@@ -88,7 +96,10 @@ public class SearchUI {
         rbtnNaiv.setBackground(Color.WHITE);
         rbtnAlfa.setBackground(Color.WHITE);
 
-        tf1.addActionListener(new EnterListener());
+        EnterListener listener = new EnterListener();
+        tf1.addActionListener(listener);
+        btnSearch.addActionListener(listener);
+        scrollPane.setBackground(Color.WHITE);
 
     }
 
@@ -104,11 +115,36 @@ public class SearchUI {
         frame.setLocationRelativeTo(null);
     }
 
+    public JTextArea getTf() {
+        return this.tf;
+    }
+
     private class EnterListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            controller.searchBoyer(tf1.getText());
+            if (btnSearch == e.getSource()) {
+                tf.setText("");
+                if (rbtnAlfa.isSelected()) {
+                    controller.setTextToSearch("Alfabet");
+                }
+                if (rbtnBibeln.isSelected()) {
+                    controller.setTextToSearch("bible-en");
+                }
+                if (rbtnBoyerMoore.isSelected()) {
+                    controller.setAlgorithm("boyer");
+                }
+                if (rbtnKMP.isSelected()) {
+                    controller.setAlgorithm("kmp");
+                }
+                if (rbtnNaiv.isSelected()) {
+                    controller.setAlgorithm("naiv");
+                }
+                if (rbtnWorst.isSelected()) {
+                    controller.setTextToSearch("many-as");
+                }
+                controller.searchCooser(tf1.getText());
+            }
         }
     }
 }

@@ -39,8 +39,11 @@ public class BoyerMoore {
         if (newArrayInt.isEmpty()) {
             newArrayInt.add(-1);
         }
-        System.out.println("BoyerMoore search, antal operationer: " + operations);
         return newArrayInt;
+    }
+
+    public int getOperations() {
+        return this.operations;
     }
 
     public static void main(String[] args) {
