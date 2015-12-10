@@ -36,9 +36,6 @@ public class BoyerMoore {
                 skip++;
             }
         }
-        if (newArrayInt.isEmpty()) {
-            newArrayInt.add(-1);
-        }
         return newArrayInt;
     }
 
