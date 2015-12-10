@@ -32,9 +32,7 @@ public class Controller {
         ArrayList<Integer> al = new ArrayList<>();
         try {
             char[] a = readFile.readFile("./src/Alfabet.txt");
-            for (int i=0; i< a.length; i++) {
-                textToSearch += ""+a[i];
-            }
+            textToSearch = String.valueOf(a);
 
             naiv.stringSearch(textToSearch, searchString,al);
             for(int i : al) {
