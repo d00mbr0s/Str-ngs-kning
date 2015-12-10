@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 //https://www.youtube.com/watch?v=GTJr8OvyEVQ
 public class KnutMorrisPratt {
+    private int operations;
 
     public int[] pre (String p) {
+        operations = 0;
         int[] preArray = new int[p.length()];
         preArray[0] = 0;
         int j = 0;
         for (int i = 1; i < p.length();) {
+            operations++;
             if(p.charAt(i) == p.charAt(j) ) {
                 preArray[i] = j + 1;
                 j++;
@@ -23,9 +26,6 @@ public class KnutMorrisPratt {
                 }
             }
         }
-        for(int i : preArray) {
-            System.out.print(i + ", ");
-        }
         return preArray;
     }
 
@@ -35,6 +35,7 @@ public class KnutMorrisPratt {
         ArrayList<Integer> posList = new ArrayList<>();
 
         while(i < t.length() && j < p.length()) {
+            operations++;
             if(t.charAt(i) == p.charAt(j)) {
                 j++;
                 i++;
@@ -51,6 +52,7 @@ public class KnutMorrisPratt {
                 j = 0;
             }
         }
+        System.out.println("KMP search, antal operationer: " + operations);
         return posList;
     }
 
