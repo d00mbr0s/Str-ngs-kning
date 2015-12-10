@@ -31,13 +31,14 @@ public class Controller {
         String textToSearch = "";
         ArrayList<Integer> al = new ArrayList<>();
         try {
-            char[] a = readFile.readFile("./src/Alfabet.txt");
+            char[] a = readFile.readFile("./src/bible-en.txt");
             textToSearch = String.valueOf(a);
 
             naiv.stringSearch(textToSearch, searchString,al);
             for(int i : al) {
                 System.out.println(i);
             }
+            System.out.println("Antal matchningar: " + al.size());
 
         } catch (IOException e) {
             e.printStackTrace();
